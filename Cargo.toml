@@ -1,0 +1,23 @@
+[package]
+name = "sprintf"
+version = "0.1.0"
+edition = "2021"
+description = "Small foot-print sprintf implementation that works with metrics_evaluation"
+authors = ["Dirk Faust <dirk@faustbande.de>"]
+license = "MIT"
+repository = "https://github.com/Dirk007/sprintf"
+keywords = ["parser", "metrics", "printf"]
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[lib]
+path="src/lib.rs"
+name="sprintf"
+
+[dependencies]
+metrics_evaluation = { git = "https://github.com/Dirk007/metrics_evaluation.git", branch = "master" }
+anyhow = {verwsion="1.0.62", default-features = false, features = []}
+
+[[example]]
+name = "simple"
+path = "examples/simple/main.rs"
