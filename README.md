@@ -32,7 +32,7 @@ All numbers can be formatted with a much simplified C version format.
 
 Use `%06d` to prepend fill the decimal with zeroes up to 6 characters. `123` will become `000123`. Same for hex.
 
-Use `%04.02f` to format `1.2` to `0001.02`.
+Use `%04.02f` to format `1.2` to `0001.20`.
 
 ## Is this considered "feature complete"?
 
