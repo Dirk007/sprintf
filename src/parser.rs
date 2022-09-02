@@ -15,7 +15,7 @@ pub enum Placeholder {
 }
 
 /// ```
-/// use printer_lib::{extractor::*, parser::*, types::*};
+/// use sprintf::{extractor::*, parser::*, types::*};
 ///
 /// let res: Placeholder = "%2d".to_string().try_into().unwrap();
 /// assert_eq!(
@@ -142,7 +142,7 @@ impl ParsedFormatString {
 
 /// Explodes `input` into Entry::Placeholder and Entry::Text parts.
 /// ```
-/// use printer_lib::{extractor::*, parser::*, types::*};
+/// use sprintf::{extractor::*, parser::*, types::*};
 ///
 /// let x = explode("%x this is a test %d hello %.2fh with 42%% foo").unwrap();
 /// println!("{:?}", x);

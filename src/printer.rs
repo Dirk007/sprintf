@@ -29,7 +29,13 @@ enum FillStyle {
     Append,
 }
 
+fn round(number: f64, decimals: u16) -> f64 {
+    let y = 10i32.pow(decimals as u32) as f64;
+    (number * y).round() / y
+}
+
 fn print_number(format: &NumberFormat, value: impl Display, fill_style: FillStyle) -> String {
+    // Prepend
     // 08d for 123 = 00000123
     // 02d for 123 = 123
     // 2d for 123 = 123
@@ -58,7 +64,7 @@ fn print_hex(format: &HexFormat, value: impl UpperHex + LowerHex) -> String {
 
 /// ```
 /// use metrics_evaluation::Value;
-/// use printer_lib::{
+/// use sprintf::{
 ///     parser::Placeholder,
 ///     printer::print_value,
 ///     types::{FloatFormat, NumberFormat},
@@ -107,6 +113,35 @@ fn print_hex(format: &HexFormat, value: impl UpperHex + LowerHex) -> String {
 /// let s = print_value(&Placeholder::Float(FloatFormat::default()), &42.123.into()).unwrap();
 /// assert_eq!(s, "42.12".to_string());
 ///
+/// let s = print_value(&Placeholder::Float(FloatFormat::default()), &42.125.into()).unwrap();
+/// assert_eq!(s, "42.13".to_string());
+///
+/// let s = print_value(
+///     &Placeholder::Float(FloatFormat {
+///         fraction: NumberFormat {
+///             digits: Some(1),
+///             fill_zeros: false,
+///         },
+///         ..Default::default()
+///     }),
+///     &42.123.into(),
+/// )
+/// .unwrap();
+/// assert_eq!(s, "42.1".to_string());
+///
+/// let s = print_value(
+///     &Placeholder::Float(FloatFormat {
+///         fraction: NumberFormat {
+///             digits: Some(4),
+///             fill_zeros: true,
+///         },
+///         ..Default::default()
+///     }),
+///     &42.12.into(),
+/// )
+/// .unwrap();
+/// assert_eq!(s, "42.1200".to_string());
+///
 /// let s = print_value(
 ///     &Placeholder::Float(FloatFormat {
 ///         base: NumberFormat::default(),
@@ -130,7 +165,8 @@ pub fn print_value(format: &Placeholder, value: &Value) -> Result<String> {
             let base = print_number(&ff.base, get_number(value)?.trunc() as i128, FillStyle::Prepend);
             let digits: u16 = ff.fraction.digits.unwrap_or_else(|| DEFAULT_FRACT_DIGITS);
             let fract = get_number(value)?.fract();
-            let value = (fract * 10f64.powf(digits as f64)).trunc() as i128;
+            // let value = (fract * 10f64.powf(digits as f64)).trunc() as i128;
+            let value = (round(fract, digits) * 10f64.powf(digits as f64)).trunc() as i128;
             let exponent = print_number(&ff.fraction, value, FillStyle::Append);
             format!("{}.{}", base, exponent)
         }
