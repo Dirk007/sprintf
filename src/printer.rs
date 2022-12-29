@@ -191,7 +191,7 @@ pub fn sprintf(parsed: &ParsedFormatString, resolver: &impl Resolver) -> Result<
                 let value = resolver
                     .resolve(variable_name)
                     .ok_or_else(|| anyhow!("Unable to resolve variable {:?}", variable_name))?;
-                result.push_str(print_value(format, value)?.as_str());
+                result.push_str(print_value(format, &value)?.as_str());
             }
         }
     }

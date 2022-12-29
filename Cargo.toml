@@ -15,8 +15,8 @@ path="src/lib.rs"
 name="sprintf"
 
 [dependencies]
-metrics_evaluation = { git = "https://github.com/Dirk007/metrics_evaluation.git", branch = "master" }
-anyhow = {verwsion="1.0.62", default-features = false, features = []}
+metrics_evaluation = { git = "https://github.com/Dirk007/metrics_evaluation.git", branch = "0.1.10" }
+anyhow = {verwsion="1.0.68", default-features = false, features = []}
 
 [[example]]
 name = "simple"
